@@ -4,7 +4,7 @@ title: Setting Up a Testnet
 
 # Setting-Up a Testnet
 
-To quickly test and run Lodestar we recommend starting a local testnet. We recommend a simple configuration of two beacon nodes with multiple validators. The [dev scripts](https://github.com/ChainSafe/lodestar/tree/unstable/scripts/dev) can used for simplicity but below instructions provide more insights on how it works and include details about different configurations.
+To quickly test and run Lodestar we recommend starting a local testnet. We recommend a simple configuration of two beacon nodes with multiple validators. The [dev scripts](https://github.com/ChainSafe/lodestar/tree/unstable/scripts/dev) can be used for simplicity but below instructions provide more insights on how it works and include details about different configurations.
 
 :::note
 The testnet set up in this guide is meant to be short-lived / ephemeral and should primarily be used for development and testing. Please refer to [Ethereum In a Box](https://github.com/rocknet/ethiab) or [Kurtosis ethereum package](https://github.com/ethpandaops/ethereum-package) to set up a long-lived private network or devnet.
