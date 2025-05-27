@@ -215,8 +215,8 @@ export type Endpoints = {
   connectPeer: Endpoint<
     // ⏎
     "POST",
-    {peerId: string; multiaddrs: string[]},
-    {query: {peerId: string; multiaddr: string[]}},
+    {enr: string},
+    {query: {enr: string}},
     EmptyResponseData,
     EmptyMeta
   >;
@@ -383,9 +383,9 @@ export function getDefinitions(_config: ChainForkConfig): RouteDefinitions<Endpo
       url: "/eth/v1/lodestar/connect_peer",
       method: "POST",
       req: {
-        writeReq: ({peerId, multiaddrs}) => ({query: {peerId, multiaddr: multiaddrs}}),
-        parseReq: ({query}) => ({peerId: query.peerId, multiaddrs: query.multiaddr}),
-        schema: {query: {peerId: Schema.StringRequired, multiaddr: Schema.StringArray}},
+        writeReq: ({enr}) => ({query: {enr}}),
+        parseReq: ({query}) => ({enr: query.enr}),
+        schema: {query: {enr: Schema.StringRequired}},
       },
       resp: EmptyResponseCodec,
     },

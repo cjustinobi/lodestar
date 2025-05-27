@@ -54,6 +54,8 @@ import {collectSequentialBlocksInRange} from "./reqresp/utils/collectSequentialB
 import {CommitteeSubscription} from "./subnets/index.js";
 import {isPublishToZeroPeersError} from "./util.js";
 
+import {ENR} from "@chainsafe/enr";
+
 type NetworkModules = {
   opts: NetworkOptions;
   privateKey: PrivateKey;
@@ -538,8 +540,8 @@ export class Network implements INetwork {
 
   // Debug
 
-  connectToPeer(peer: string, multiaddr: string[]): Promise<void> {
-    return this.core.connectToPeer(peer, multiaddr);
+  connectToPeer(enr: ENR): Promise<void> {
+    return this.core.connectToPeer(enr);
   }
 
   disconnectPeer(peer: string): Promise<void> {

@@ -9,6 +9,8 @@ import {PeerAction, PeerScoreStats} from "../peers/index.js";
 import {OutgoingRequestArgs} from "../reqresp/types.js";
 import {CommitteeSubscription} from "../subnets/interface.js";
 
+import type { ENR } from "@chainsafe/enr";
+
 export type MultiaddrStr = string;
 export type PeerIdStr = string;
 
@@ -27,7 +29,7 @@ export interface INetworkCorePublic {
   unsubscribeGossipCoreTopics(): Promise<void>;
 
   // Debug
-  connectToPeer(peer: PeerIdStr, multiaddr: MultiaddrStr[]): Promise<void>;
+  connectToPeer(enr: ENR): Promise<void>;
   disconnectPeer(peer: PeerIdStr): Promise<void>;
   dumpPeers(): Promise<routes.lodestar.LodestarNodePeer[]>;
   dumpPeer(peerIdStr: PeerIdStr): Promise<routes.lodestar.LodestarNodePeer | undefined>;

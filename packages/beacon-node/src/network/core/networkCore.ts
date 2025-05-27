@@ -377,10 +377,35 @@ export class NetworkCore implements INetworkCore {
 
   // Debug
 
-  async connectToPeer(peerIdStr: PeerIdStr, multiaddrStrArr: MultiaddrStr[]): Promise<void> {
-    const peer = peerIdFromString(peerIdStr);
-    await this.libp2p.peerStore.merge(peer, {multiaddrs: multiaddrStrArr.map(multiaddr)});
+  async connectToPeer(enr: ENR): Promise<void> {
+    const peer = enr.peerId;
+    const multiaddrTcp = enr.getLocationMultiaddr("tcp");
+    const multiaddrUdp = enr.getLocationMultiaddr("udp");
+  
+  // Collect all available multiaddrs
+  const multiaddrs = [multiaddrTcp, multiaddrUdp].filter(Boolean);
+  
+  if (multiaddrs.length === 0) {
+    throw new Error("No valid multiaddrs found in ENR");
+  }
+
+  // Store peer info in peerStore
+  await this.libp2p.peerStore.merge(peer, {
+    multiaddrs: multiaddrs
+  });
+
+  // await this.addTrustedPeer(peer, enr);
+
+  // Attempt connection
+  try {
     await this.libp2p.dial(peer);
+  } catch (error) {
+    // Log but don't throw - trusted peers should be retried later
+    console.warn(`Failed to connect to trusted peer ${peer.toString()}: ${error.message}`);
+  }
+    // const peer = peerIdFromString(peerIdStr);
+    // await this.libp2p.peerStore.merge(peer, {multiaddrs: multiaddrStrArr.map(multiaddr)});
+    // await this.libp2p.dial(peer);
   }
 
   async disconnectPeer(peerIdStr: PeerIdStr): Promise<void> {
